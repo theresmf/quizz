@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { NextApiResponse } from "next";
 
 type ButtonAction = {
   id: string;
@@ -9,7 +8,7 @@ type ButtonAction = {
 // Temporary in-memory storage
 const temporaryList: ButtonAction[] = [];
 
-export async function POST(request: Request, res: NextApiResponse) {
+export async function POST(request: Request) {
   try {
     // Parse the request body
     const { id, timestamp } = await request.json();

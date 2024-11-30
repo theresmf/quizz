@@ -41,7 +41,7 @@ export default function GameBoard() {
   );
   const [newPlayerName, setNewPlayerName] = useState("");
 
-  const [activeQuestion, setActiveQuestion] = useState<{
+  const [, setActiveQuestion] = useState<{
     value: number;
     categoryIndex: number;
     questionIndex: number;
@@ -264,7 +264,7 @@ interface TeamBoxes {
 }
 
 const TeamBoxes = ({ players }: TeamBoxes) => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["buttonActions"], // The unique key for this query
     queryFn: fetchButtonActions, // The function to fetch data
     refetchInterval: 100, // Poll every second

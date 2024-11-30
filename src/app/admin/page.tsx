@@ -1,4 +1,4 @@
-import AdminBoard from "./page";
+import AdminBoard from "./AdminBoard";
 
 export default function AdminPage() {
   return (
