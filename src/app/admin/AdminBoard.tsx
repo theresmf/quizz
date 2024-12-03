@@ -25,7 +25,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TreePine, Gift, Snowflake, Star, Bell } from "lucide-react";
 import { useJeopardyContext } from "../game_context";
+import PlayerManagement from "../players/page";
 
 type Question = {
   id: number;
@@ -42,10 +44,8 @@ export default function AdminBoard() {
     availableQuestions,
     setAvailableQuestions,
   } = useJeopardyContext();
-
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -102,28 +102,34 @@ export default function AdminBoard() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-gradient-to-br from-red-700 to-green-800 min-h-screen text-white">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-yellow-300">Jeopardy Admin</h1>
+        <h1 className="text-4xl font-bold text-yellow-300 flex items-center">
+          <Bell className="mr-4 h-10 w-10" />
+          Christmas Jeopardy Admin
+          <Bell className="ml-4 h-10 w-10" />
+        </h1>
         <Button
           variant="outline"
-          className="bg-yellow-400 text-purple-900 hover:bg-yellow-300"
-          onClick={() => router.push("/game-board")}
+          className="bg-red-600 text-white hover:bg-red-700"
+          onClick={() => router.push("/")}
         >
+          <TreePine className="mr-2 h-4 w-4" />
           Back to Game
         </Button>
       </div>
 
-      <Card className="bg-purple-700 mb-8">
+      <Card className="bg-red-800 mb-8 border-4 border-yellow-300">
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold text-yellow-300">
-            Manage Categories
+          <CardTitle className="text-2xl font-semibold text-yellow-300 flex items-center justify-center">
+            <Gift className="mr-2 h-6 w-6" /> Manage Categories{" "}
+            <Gift className="ml-2 h-6 w-6" />
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-2 mb-4">
             <Select onValueChange={addCategory}>
-              <SelectTrigger className="bg-white text-purple-900">
+              <SelectTrigger className="bg-white text-red-900">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
@@ -138,8 +144,9 @@ export default function AdminBoard() {
             </Select>
             <Button
               onClick={() => {}}
-              className="bg-green-500 hover:bg-green-600"
+              className="bg-green-600 hover:bg-green-700 text-white"
             >
+              <Star className="mr-2 h-4 w-4" />
               Add Category
             </Button>
           </div>
@@ -147,14 +154,17 @@ export default function AdminBoard() {
             {categories.map((category) => (
               <div
                 key={category.name}
-                className="flex items-center justify-between bg-blue-600 p-2 rounded"
+                className="flex items-center justify-between bg-green-700 p-2 rounded"
               >
-                <span>{category.name}</span>
+                <span className="flex items-center">
+                  <Snowflake className="mr-2 h-4 w-4" />
+                  {category.name}
+                </span>
                 <div>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="mr-2"
+                    className="mr-2 bg-yellow-400 text-red-900 hover:bg-yellow-300"
                     onClick={() => setEditingCategory(category.name)}
                   >
                     Edit
@@ -163,6 +173,7 @@ export default function AdminBoard() {
                     variant="destructive"
                     size="sm"
                     onClick={() => removeCategory(category.name)}
+                    className="bg-red-600 hover:bg-red-700"
                   >
                     Remove
                   </Button>
@@ -175,10 +186,14 @@ export default function AdminBoard() {
 
       <div className="space-y-6">
         {categories.map((category) => (
-          <Card key={category.name} className="bg-purple-700">
+          <Card
+            key={category.name}
+            className="bg-red-800 border-4 border-yellow-300"
+          >
             <CardHeader>
-              <CardTitle className="text-2xl font-semibold text-yellow-300">
-                {category.name}
+              <CardTitle className="text-2xl font-semibold text-yellow-300 flex items-center justify-center">
+                <Star className="mr-2 h-6 w-6" /> {category.name}{" "}
+                <Star className="ml-2 h-6 w-6" />
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -188,7 +203,7 @@ export default function AdminBoard() {
                     <AccordionTrigger className="text-white">
                       ${question.value}: {question.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-yellow-200">
+                    <AccordionContent className="text-yellow-300">
                       <p className="mb-2">{question.answer}</p>
                       <Button
                         variant="destructive"
@@ -196,6 +211,7 @@ export default function AdminBoard() {
                         onClick={() =>
                           removeQuestionFromCategory(category.name, question.id)
                         }
+                        className="bg-red-600 hover:bg-red-700"
                       >
                         Remove Question
                       </Button>
@@ -205,9 +221,10 @@ export default function AdminBoard() {
               </Accordion>
               <Button
                 variant="outline"
-                className="mt-4 bg-blue-500 hover:bg-blue-600"
+                className="mt-4 bg-green-600 hover:bg-green-700 text-white"
                 onClick={() => setEditingCategory(category.name)}
               >
+                <Gift className="mr-2 h-4 w-4" />
                 Add Question
               </Button>
             </CardContent>
@@ -219,10 +236,11 @@ export default function AdminBoard() {
         open={editingCategory !== null}
         onOpenChange={() => setEditingCategory(null)}
       >
-        <DialogContent className="bg-purple-700 text-white">
+        <DialogContent className="bg-red-800 text-white border-4 border-yellow-300">
           <DialogHeader>
-            <DialogTitle className="text-yellow-300">
-              Edit Category: {editingCategory}
+            <DialogTitle className="text-yellow-300 flex items-center justify-center">
+              <Gift className="mr-2 h-6 w-6" /> Edit Category: {editingCategory}{" "}
+              <Gift className="ml-2 h-6 w-6" />
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
@@ -239,7 +257,7 @@ export default function AdminBoard() {
                 }
               }}
             >
-              <SelectTrigger className="bg-white text-purple-900">
+              <SelectTrigger className="bg-white text-red-900">
                 <SelectValue placeholder="Select a question" />
               </SelectTrigger>
               <SelectContent>
@@ -257,12 +275,18 @@ export default function AdminBoard() {
             </Select>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditingCategory(null)}>
+            <Button
+              variant="outline"
+              onClick={() => setEditingCategory(null)}
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              <Snowflake className="mr-2 h-4 w-4" />
               Close
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <PlayerManagement />
     </div>
   );
 }

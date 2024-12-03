@@ -28,9 +28,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryClientProvider client={queryClient}>
-          <JeopardyProvider>{children}</JeopardyProvider>
-        </QueryClientProvider>
+        <div className="flex flex-col min-h-screen bg-gradient-to-br from-red-700 to-green-800 text-white">
+          <QueryClientProvider client={queryClient}>
+            <JeopardyProvider>{children}</JeopardyProvider>
+          </QueryClientProvider>
+        </div>
       </body>
     </html>
   );

@@ -78,7 +78,7 @@ export default function QuestionBank() {
   );
 
   return (
-    <div className="container mx-auto p-4 bg-gradient-to-br from-purple-600 to-blue-600 min-h-screen text-white">
+    <div className="p5">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-yellow-300">Question Bank</h1>
         <Button

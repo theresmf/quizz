@@ -28,6 +28,9 @@ type JeopardyContextType = {
   setAvailableQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
   players: Player[];
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
+  addPlayer: (name: string) => void;
+  removePlayer: (id: number) => void;
+  updateScore: (id: number, points: number) => void;
 };
 
 const JeopardyContext = createContext<JeopardyContextType | undefined>(
@@ -125,6 +128,28 @@ export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
     },
   ]);
   const [players, setPlayers] = useState<Player[]>([]);
+  const addPlayer = (name: string) => {
+    if (name.trim()) {
+      setPlayers((prevPlayers) => [
+        ...prevPlayers,
+        { id: prevPlayers.length + 1, name: name.trim(), score: 0 },
+      ]);
+    }
+  };
+
+  const removePlayer = (id: number) => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.filter((player) => player.id !== id)
+    );
+  };
+
+  const updateScore = (id: number, points: number) => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.id === id ? { ...player, score: player.score + points } : player
+      )
+    );
+  };
 
   return (
     <JeopardyContext.Provider
@@ -135,6 +160,9 @@ export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
         setAvailableQuestions,
         players,
         setPlayers,
+        addPlayer,
+        removePlayer,
+        updateScore,
       }}
     >
       {children}
