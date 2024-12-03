@@ -15,7 +15,8 @@ const temporaryList: ButtonActionApi[] = [];
 
 export async function POST(request: Request) {
   try {
-    const { id, timestamp } = await request.json();
+    const { id } = await request.json();
+    const timestamp = Date.now().toString();
 
     if (!id || !timestamp) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 });
