@@ -1,5 +1,5 @@
-import GameBoard from "./GameBoard";
+import AdminBoard from "../admin/AdminBoard";
 
 export default function GameBoardPage() {
-  return <GameBoard />;
+  return <AdminBoard />;
 }

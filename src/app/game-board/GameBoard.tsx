@@ -23,13 +23,12 @@ import { useRouter } from "next/navigation";
 import { Player, useJeopardyContext } from "../game_context";
 import { motion, AnimatePresence } from "framer-motion";
 import { ButtonAction } from "../api/raspberry/route";
-import { useQuery } from "@tanstack/react-query";
 
 type ConfettiProps = {
   count: number;
 };
 
-const fetchButtonActions = async (): Promise<ButtonAction[]> => {
+/* const fetchButtonActions = async (): Promise<ButtonAction[]> => {
   const res = await fetch("/api/raspberry", { method: "GET" });
 
   if (!res.ok) {
@@ -39,7 +38,7 @@ const fetchButtonActions = async (): Promise<ButtonAction[]> => {
 
   console.log("data", data);
   return data;
-};
+}; */
 
 const SnowflakeBackground: React.FC = () => {
   return (
@@ -116,22 +115,23 @@ export default function JeopardyBoard() {
     new Set()
   );
 
-  const { data, error } = useQuery({
+  /*   const { data, error } = useQuery({
     queryKey: ["buttonActions"],
     queryFn: fetchButtonActions,
     refetchInterval: 100,
-  });
+  }); */
+
+  /*   const data = {
+    teamId: 1,
+    timestamp: Date.now(),
+  }; */
+  const error = null;
 
   if (error) {
     console.error("Query Error:", error);
   }
 
-  const transformedData =
-    data?.map((action) => ({
-      ...action,
-      id: Number(action.id),
-      timestamp: Number(action.timestamp),
-    })) || [];
+  const transformedData = [] as ButtonAction[];
 
   const handleReveal = (
     categoryIndex: number,
