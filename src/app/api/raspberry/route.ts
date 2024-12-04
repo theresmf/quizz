@@ -1,32 +1,43 @@
 import { NextResponse } from "next/server";
 
-type ButtonActionApi = {
-  id: string;
+export type TeamClickActionApi = {
+  teamId: string;
   timestamp: string;
 };
 
-export type ButtonAction = {
-  id: number;
-  timestamp: number;
+type PostRequest = {
+  action: {
+    type: "reset" | "trykk";
+    id: string;
+  };
 };
-
 // Temporary in-memory storage
-const temporaryList: ButtonActionApi[] = [];
+const listOfCurrentPlayersClicked: TeamClickActionApi[] = [];
 
 export async function POST(request: Request) {
   try {
-    const { id } = await request.json();
+    const { action } = (await request.json()) as PostRequest;
+
     const timestamp = Date.now().toString();
 
-    if (!id || !timestamp) {
-      return NextResponse.json({ error: "Invalid input" }, { status: 400 });
-    }
+    if (action.type === "reset") {
+      listOfCurrentPlayersClicked.length = 0;
+      return NextResponse.json({ message: "Reset successful" });
+    } else {
+      const teamId = action.id;
 
-    if (ensureOnlyOneActionPerRound({ id, timestamp })) {
-      temporaryList.push({ id, timestamp });
-    }
+      if (!teamId) {
+        return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+      }
 
-    return NextResponse.json({ message: "Action added", list: temporaryList });
+      if (ensureOnlyOneTeamClickPerRound({ teamId, timestamp })) {
+        listOfCurrentPlayersClicked.push({ teamId, timestamp });
+      }
+
+      return NextResponse.json({
+        listOfCurrentPlayersClicked,
+      });
+    }
   } catch (error) {
     console.error("Error handling request:", error);
 
@@ -38,25 +49,19 @@ export async function POST(request: Request) {
 }
 // GET request to retrieve the current list
 export async function GET() {
-  if (temporaryList.length === 0) {
-    console.error("temporaryList is empty!");
+  if (listOfCurrentPlayersClicked.length === 0) {
     return NextResponse.json([]);
   }
 
-  const plainList = temporaryList.map(({ id, timestamp }) => ({
-    id: String(id),
-    timestamp: String(timestamp),
-  }));
-
-  return NextResponse.json(plainList);
+  return NextResponse.json(listOfCurrentPlayersClicked);
 }
 
-const ensureOnlyOneActionPerRound = (newAction: ButtonActionApi) => {
-  const teamNumbersThatheardThisQuestion = temporaryList.map(
-    (action) => action.id
+const ensureOnlyOneTeamClickPerRound = (newClick: TeamClickActionApi) => {
+  const teamsThatWantToAnswer = listOfCurrentPlayersClicked.map(
+    (action) => action.teamId
   );
-  if (temporaryList.length > 0) {
-    if (teamNumbersThatheardThisQuestion.includes(newAction.id)) {
+  if (listOfCurrentPlayersClicked.length > 0) {
+    if (teamsThatWantToAnswer.includes(newClick.teamId)) {
       return false;
     }
   }

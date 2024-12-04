@@ -10,35 +10,38 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Plus,
-  Minus,
-  TreePine,
-  Gift,
-  Snowflake,
-  Star,
-  Bell,
-} from "lucide-react";
+import { Plus, Minus, TreePine, Gift, Snowflake, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Player, useJeopardyContext } from "../game_context";
 import { motion, AnimatePresence } from "framer-motion";
-import { ButtonAction } from "../api/raspberry/route";
+import { useQuery } from "@tanstack/react-query";
+import { TeamClickActionApi } from "../api/raspberry/route";
 
 type ConfettiProps = {
   count: number;
 };
 
-/* const fetchButtonActions = async (): Promise<ButtonAction[]> => {
+export type TeamClickAction = {
+  teamId: number;
+  timestamp: number;
+};
+
+const fetchButtonActions = async (): Promise<TeamClickAction[]> => {
   const res = await fetch("/api/raspberry", { method: "GET" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  const data = await res.json();
+  const data = (await res.json()) as TeamClickActionApi[];
 
-  console.log("data", data);
-  return data;
-}; */
+  return (
+    data.map((action) => ({
+      ...action,
+      teamId: Number(action.teamId),
+      timestamp: Number(action.timestamp),
+    })) || []
+  );
+};
 
 const SnowflakeBackground: React.FC = () => {
   return (
@@ -115,24 +118,6 @@ export default function JeopardyBoard() {
     new Set()
   );
 
-  /*   const { data, error } = useQuery({
-    queryKey: ["buttonActions"],
-    queryFn: fetchButtonActions,
-    refetchInterval: 100,
-  }); */
-
-  /*   const data = {
-    teamId: 1,
-    timestamp: Date.now(),
-  }; */
-  const error = null;
-
-  if (error) {
-    console.error("Query Error:", error);
-  }
-
-  const transformedData = [] as ButtonAction[];
-
   const handleReveal = (
     categoryIndex: number,
     questionIndex: number,
@@ -167,9 +152,9 @@ export default function JeopardyBoard() {
       <div className="container mx-auto px-4 py-8 flex-grow">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-5xl font-bold text-center text-yellow-300 drop-shadow-lg flex items-center">
-            <Bell className="mr-4 h-12 w-12" />
-            Christmas Jeopardy: Web Dev Edition
-            <Bell className="ml-4 h-12 w-12" />
+            <TreePine className="mr-4 h-12 w-12" />
+            Christmas Jeopardy
+            <TreePine className="ml-4 h-12 w-12" />
           </h1>
           <div>
             <Button
@@ -297,7 +282,7 @@ export default function JeopardyBoard() {
         </div>
 
         {/* Team Boxes */}
-        <TeamBoxes players={players} transformedData={transformedData} />
+        <TeamBoxes players={players} />
       </div>
 
       <AnimatePresence>
@@ -309,16 +294,25 @@ export default function JeopardyBoard() {
 
 interface TeamBoxesProps {
   players: Player[];
-  transformedData: ButtonAction[];
 }
 
-const TeamBoxes = ({ players, transformedData }: TeamBoxesProps) => {
+const TeamBoxes = ({ players }: TeamBoxesProps) => {
+  const { data, error } = useQuery({
+    queryKey: ["buttonActions"],
+    queryFn: fetchButtonActions,
+    refetchInterval: 100,
+    enabled: players.length > 0,
+  });
+
+  if (error) {
+    console.error("Query Error:", error);
+  }
+
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {players.map((player) => {
-        const rank = transformedData.findIndex(
-          (action) => action.id === player.id
-        );
+        const rank =
+          data?.findIndex((action) => action.teamId === player.id) ?? -1;
         const isActive = rank !== -1;
 
         return (
@@ -326,7 +320,7 @@ const TeamBoxes = ({ players, transformedData }: TeamBoxesProps) => {
             key={player.id}
             className={`relative bg-green-700 border-4 ${getBorderColourForPlayer(
               player.id,
-              transformedData
+              data
             )} p-4 rounded-lg shadow-lg flex items-center justify-between`}
             initial={{ opacity: 0.5, scale: 0.95 }}
             animate={{
@@ -359,11 +353,11 @@ const TeamBoxes = ({ players, transformedData }: TeamBoxesProps) => {
 
 const getBorderColourForPlayer = (
   playerId: number,
-  rankedList: ButtonAction[] | undefined
+  rankedList: TeamClickAction[] | undefined
 ): string => {
   if (!rankedList) return ""; // Handle the case where rankedList isn't available
 
-  const rank = rankedList.findIndex((action) => action.id === playerId);
+  const rank = rankedList.findIndex((action) => action.teamId === playerId);
   return getBorderColour(rank);
 };
 
