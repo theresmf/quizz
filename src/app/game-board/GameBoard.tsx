@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -165,15 +164,6 @@ export default function JeopardyBoard() {
               <TreePine className="mr-2 h-4 w-4" />
               Admin
             </Button>
-            <Link href="/players">
-              <Button
-                variant="outline"
-                className="bg-green-600 text-white hover:bg-green-700"
-              >
-                <Gift className="mr-2 h-4 w-4" />
-                Manage Players
-              </Button>
-            </Link>
           </div>
         </div>
 
