@@ -173,19 +173,7 @@ export default function JeopardyBoard() {
                         : `$${item.value}`}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none w-5/6 h-5/6 p-8">
-                    <DialogHeader
-                      className="gap-0 leadning-none inline-flex"
-                      style={{ lineHeight: "1 !important" }}
-                    >
-                      <DialogTitle
-                        className="text-yellow-300 inline-flex gap-0 items-center justify-center text-4xl leadning-none"
-                        style={{ lineHeight: "1 !important" }}
-                      >
-                        <Gift className="mr-2 h-6 w-6" /> ${item.value} Question{" "}
-                        <Gift className="ml-2 h-6 w-6" />
-                      </DialogTitle>
-                    </DialogHeader>
+                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none zw-5/6 h-5/6 p-8">
                     <div className="py-4 flex justify-center items-center flex-col">
                       <p className="text-4xl font-semibold mb-4">
                         {item.question}
