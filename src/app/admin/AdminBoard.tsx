@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { TreePine, Gift, Snowflake, Star, Bell } from "lucide-react";
 import { useJeopardyContext } from "../game_context";
-import PlayerManagement from "../players/page";
+import PlayerManagement from "../_components/PlayerManagement";
 
 type Question = {
   id: number;
@@ -106,17 +106,27 @@ export default function AdminBoard() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-yellow-300 flex items-center">
           <Bell className="mr-4 h-10 w-10" />
-          Christmas Jeopardy Admin
+          Admin
           <Bell className="ml-4 h-10 w-10" />
         </h1>
-        <Button
-          variant="outline"
-          className="bg-red-600 text-white hover:bg-red-700"
-          onClick={() => router.push("/")}
-        >
-          <TreePine className="mr-2 h-4 w-4" />
-          Back to Game
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            className="bg-red-600 text-white hover:bg-red-700 mr-2"
+            onClick={() => router.push("/question-bank")}
+          >
+            <TreePine className="mr-2 h-4 w-4" />
+            Spørsmålsbank
+          </Button>
+          <Button
+            variant="outline"
+            className="bg-red-600 text-white hover:bg-red-700"
+            onClick={() => router.push("/")}
+          >
+            <TreePine className="mr-2 h-4 w-4" />
+            Back to Game
+          </Button>
+        </div>
       </div>
 
       <Card className="bg-red-800 mb-8 border-4 border-yellow-300">
