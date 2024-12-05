@@ -173,7 +173,7 @@ export default function JeopardyBoard() {
                         : `$${item.value}`}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none zw-5/6 h-5/6 p-8">
+                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none zw-5/6 h-5/6 p-8 overflow-y-scroll">
                     <div className="py-4 flex justify-center items-center flex-col">
                       <p className="text-4xl font-semibold mb-4">
                         {item.question}
@@ -198,17 +198,17 @@ export default function JeopardyBoard() {
                           onClick={() =>
                             revealAnswer(categoryIndex, questionIndex)
                           }
-                          className="w-full mt-2 bg-green-600 hover:bg-green-500 text-4xl"
+                          className="min-w-fit mt-2 p-6 bg-green-600 hover:bg-green-500 text-4xl"
                         >
-                          Reveal Answer
+                          Vis riktig svar
                         </Button>
                       )}
                     </div>
                     {players.length > 0 && (
                       <div className="mt-4">
                         <h3 className="text-4xl font-semibold mb-2 text-yellow-300 flex items-center justify-center">
-                          <Gift className="mr-2 h-5 w-5" /> Assign Points{" "}
-                          <Gift className="ml-2 h-5 w-5" />
+                          <Gift className="mr-2 h-5 w-5" />
+                          Tildel poeng <Gift className="ml-2 h-5 w-5" />
                         </h3>
                         <div className="grid grid-cols-2 gap-2">
                           {players.map((player) => (
