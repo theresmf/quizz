@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import PlayerManagement from "../_components/PlayerManagement";
 import { Bell, TreePine } from "lucide-react";
 
-export default function AdminBoard() {
+export default function AdminBoardBasic() {
   const router = useRouter();
 
   return (
