@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { TeamClickActionApi } from "../api/raspberry/route";
+import Snowfall from "react-snowfall";
 
 type ConfettiProps = {
   count: number;
@@ -40,28 +41,6 @@ const fetchButtonActions = async (): Promise<TeamClickAction[]> => {
       teamId: Number(action.teamId),
       timestamp: Number(action.timestamp),
     })) || []
-  );
-};
-
-const SnowflakeBackground: React.FC = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-0">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute text-white opacity-20 animate-fall"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `-${Math.random() * 20}%`,
-            fontSize: `${Math.random() * 20 + 10}px`,
-            animationDuration: `${Math.random() * 10 + 5}s`,
-            animationDelay: `${Math.random() * 5}s`,
-          }}
-        >
-          ❄
-        </div>
-      ))}
-    </div>
   );
 };
 
@@ -105,10 +84,7 @@ export default function JeopardyBoard() {
     new Set()
   );
   const [showConfetti, setShowConfetti] = useState(false);
-  const [showSnowflakes, setShowSnowflakes] = useState(false);
-  useEffect(() => {
-    setShowSnowflakes(true);
-  }, []);
+
   const [, setActiveQuestion] = useState<{
     value: number;
     categoryIndex: number;
@@ -148,7 +124,7 @@ export default function JeopardyBoard() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-red-700 to-green-800 text-white">
-      {showSnowflakes && <SnowflakeBackground />}
+      <Snowfall />
       <div className="container mx-auto px-4 py-8 flex-grow">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-5xl font-bold text-center text-yellow-300 drop-shadow-lg flex items-center">
