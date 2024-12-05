@@ -1,5 +1,5 @@
-import AdminBoard from "./AdminBoard";
+import AdminBoardBasic from "./AdminBoard";
 
 export default function AdminPage() {
-  return <AdminBoard />;
+  return <AdminBoardBasic />;
 }
