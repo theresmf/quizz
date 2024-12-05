@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { Player, useJeopardyContext } from "../game_context";
 import { motion, AnimatePresence } from "framer-motion";
 import { ButtonAction } from "../api/raspberry/route";
+import Image from "next/image";
 
 type ConfettiProps = {
   count: number;
@@ -221,7 +222,14 @@ export default function JeopardyBoard() {
                         : `$${item.value}`}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300">
+                  <DialogContent
+                    className="bg-red-800 text-white border-4 border-yellow-300"
+                    style={{
+                      width: "80%",
+                      height: "80%",
+                      padding: "2rem",
+                    }}
+                  >
                     <DialogHeader>
                       <DialogTitle className="text-yellow-300 flex items-center justify-center">
                         <Gift className="mr-2 h-6 w-6" /> ${item.value} Question{" "}
@@ -232,6 +240,15 @@ export default function JeopardyBoard() {
                       <p className="text-lg font-semibold mb-4">
                         {item.question}
                       </p>
+                      {item.image.length > 0 && (
+                        <Image
+                          alt="Selected"
+                          className="object-cover"
+                          width={400}
+                          height={400}
+                          src={item.image}
+                        />
+                      )}
                       {revealedAnswers.has(
                         `${categoryIndex}-${questionIndex}`
                       ) ? (

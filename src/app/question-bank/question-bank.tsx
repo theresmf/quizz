@@ -17,6 +17,7 @@ type Question = {
   question: string;
   answer: string;
   categories: string[];
+  image: string;
 };
 
 export default function QuestionBank() {
@@ -26,6 +27,7 @@ export default function QuestionBank() {
     question: "",
     answer: "",
     categories: [],
+    image: "",
   });
   const [newCategory, setNewCategory] = useState("");
   const [filterCategories, setFilterCategories] = useState<string[]>([]);
@@ -34,7 +36,13 @@ export default function QuestionBank() {
   const addQuestion = () => {
     if (newQuestion.question && newQuestion.answer) {
       setQuestions([...questions, { ...newQuestion, id: Date.now() }]);
-      setNewQuestion({ value: 200, question: "", answer: "", categories: [] });
+      setNewQuestion({
+        value: 200,
+        question: "",
+        answer: "",
+        categories: [],
+        image: "",
+      });
     }
   };
 
