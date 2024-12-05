@@ -7,6 +7,7 @@ type Question = {
   value: number;
   question: string;
   answer: string;
+  image: string;
   categories: string[];
 };
 
@@ -47,84 +48,79 @@ export const useJeopardyContext = () => {
   return context;
 };
 
+const questionsBilde = [
+  {
+    id: 12345,
+    value: 200,
+    image: "/pictures/Level1.png",
+    question: "Hvem er dette?",
+    categories: ["bilde"],
+    answer: "Gøril og Grinchen",
+  },
+  {
+    id: 12346,
+    value: 400,
+    image: "/pictures/Level2.png",
+    question: "Hvem er dette?",
+    categories: ["bilde"],
+    answer: "Markus, Jostein og Rudolf",
+  },
+  {
+    id: 12347,
+    value: 600,
+    image: "/pictures/Level3.png",
+    question: "Hvem er dette?",
+    categories: ["bilde"],
+    answer: "Kevin McCallister, Emil Telstad og John McClane",
+  },
+  {
+    id: 12348,
+    value: 800,
+    image: "/pictures/Level4.png",
+    question: "Hvem er dette?",
+    categories: ["bilde"],
+    answer: "Vilde, Anne Marie, Gizmo og David",
+  },
+];
+
 export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([
+    { questions: questionsBilde, name: "Hvem er dette?" },
+  ]);
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([
     {
-      id: 1,
+      id: 12345,
       value: 200,
-      question: "What is React?",
-      answer: "A JavaScript library for building user interfaces",
-      categories: ["React", "JavaScript"],
+      image: "/pictures/Level1.png",
+      question: "Hvem er dette?",
+      categories: ["bilde"],
+      answer: "Gøril og Grinchen",
     },
     {
-      id: 2,
+      id: 12346,
       value: 400,
-      question: "What is JSX?",
-      answer: "A syntax extension for JavaScript used with React",
-      categories: ["React", "JavaScript"],
+      image: "pictures/Level2.png",
+      question: "Hvem er dette?",
+      categories: ["bilde"],
+      answer: "Markus, Jostein og Rudolf",
     },
     {
-      id: 3,
+      id: 12347,
       value: 600,
-      question: "What is a React component?",
-      answer: "A reusable piece of UI in React",
-      categories: ["React"],
+      image: "pictures/Level3.png",
+      question: "Hvem er dette?",
+      categories: ["bilde"],
+      answer: "Kevin McCallister, Emil Telstad og John McClane",
     },
     {
-      id: 4,
+      id: 12348,
       value: 800,
-      question: "What is the virtual DOM?",
-      answer:
-        "A lightweight copy of the actual DOM used by React for performance optimization",
-      categories: ["React"],
-    },
-    {
-      id: 5,
-      value: 1000,
-      question: "What are React Hooks?",
-      answer:
-        "Functions that let you use state and other React features in functional components",
-      categories: ["React"],
-    },
-    {
-      id: 6,
-      value: 200,
-      question: "What is Node.js?",
-      answer: "A JavaScript runtime built on Chrome's V8 JavaScript engine",
-      categories: ["JavaScript", "Backend"],
-    },
-    {
-      id: 7,
-      value: 400,
-      question: "What is Express.js?",
-      answer: "A minimal and flexible Node.js web application framework",
-      categories: ["JavaScript", "Backend"],
-    },
-    {
-      id: 8,
-      value: 600,
-      question: "What is MongoDB?",
-      answer: "A document-oriented NoSQL database",
-      categories: ["Database"],
-    },
-    {
-      id: 9,
-      value: 800,
-      question: "What is GraphQL?",
-      answer:
-        "A query language for APIs and a runtime for executing those queries",
-      categories: ["API", "Backend"],
-    },
-    {
-      id: 10,
-      value: 1000,
-      question: "What is Docker?",
-      answer:
-        "A platform for developing, shipping, and running applications in containers",
-      categories: ["DevOps"],
+      image: "pictures/Level4.png",
+      question: "Hvem er dette?",
+      categories: ["bilde"],
+      answer: "Vilde, Anne Marie, Gizmo og David",
     },
   ]);
   const [players, setPlayers] = useState<Player[]>([]);
