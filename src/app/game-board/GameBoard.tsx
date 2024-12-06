@@ -1,13 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { useCallback, useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus, Minus, TreePine, Gift, Snowflake, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -16,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { TeamClickActionApi } from "../api/raspberry/route";
+import Snowfall from "react-snowfall";
 
 type ConfettiProps = {
   count: number;
@@ -40,28 +35,6 @@ const fetchButtonActions = async (): Promise<TeamClickAction[]> => {
       teamId: Number(action.teamId),
       timestamp: Number(action.timestamp),
     })) || []
-  );
-};
-
-const SnowflakeBackground: React.FC = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-0">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute text-white opacity-20 animate-fall"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `-${Math.random() * 20}%`,
-            fontSize: `${Math.random() * 20 + 10}px`,
-            animationDuration: `${Math.random() * 10 + 5}s`,
-            animationDelay: `${Math.random() * 5}s`,
-          }}
-        >
-          ❄
-        </div>
-      ))}
-    </div>
   );
 };
 
@@ -105,10 +78,7 @@ export default function JeopardyBoard() {
     new Set()
   );
   const [showConfetti, setShowConfetti] = useState(false);
-  const [showSnowflakes, setShowSnowflakes] = useState(false);
-  useEffect(() => {
-    setShowSnowflakes(true);
-  }, []);
+
   const [, setActiveQuestion] = useState<{
     value: number;
     categoryIndex: number;
@@ -148,7 +118,7 @@ export default function JeopardyBoard() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-red-700 to-green-800 text-white">
-      {showSnowflakes && <SnowflakeBackground />}
+      <Snowfall />
       <div className="container mx-auto px-4 py-8 flex-grow">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-5xl font-bold text-center text-yellow-300 drop-shadow-lg flex items-center">
@@ -197,19 +167,7 @@ export default function JeopardyBoard() {
                         : `$${item.value}`}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none w-5/6 h-5/6 p-8">
-                    <DialogHeader
-                      className="leadning-none inline-flex flex-start"
-                      style={{ justifyContent: "space-between !important" }}
-                    >
-                      <DialogTitle
-                        className="text-yellow-300 inline-flex gap-0 items-center justify-center text-4xl leadning-none"
-                        style={{ lineHeight: "1 !important" }}
-                      >
-                        <Gift className="mr-2 h-6 w-6" /> ${item.value} Question{" "}
-                        <Gift className="ml-2 h-6 w-6" />
-                      </DialogTitle>
-                    </DialogHeader>
+                  <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none zw-5/6 h-5/6 p-8 overflow-y-scroll">
                     <div className="py-4 flex justify-center items-center flex-col">
                       <p
                         className="text-8xl font-semibold mb-4"
@@ -226,28 +184,28 @@ export default function JeopardyBoard() {
                           src={item.image}
                         />
                       )}
+                      {revealedAnswers.has(
+                        `${categoryIndex}-${questionIndex}`
+                      ) ? (
+                        <p className="text-yellow-300 font-bold mt-4 text-4xl">
+                          {item.answer}
+                        </p>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            revealAnswer(categoryIndex, questionIndex)
+                          }
+                          className="min-w-fit mt-2 p-6 bg-green-600 hover:bg-green-500 text-4xl"
+                        >
+                          Vis riktig svar
+                        </Button>
+                      )}
                     </div>
-                    {revealedAnswers.has(
-                      `${categoryIndex}-${questionIndex}`
-                    ) ? (
-                      <p className="text-yellow-300 font-bold mt-4 text-4xl">
-                        {item.answer}
-                      </p>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          revealAnswer(categoryIndex, questionIndex)
-                        }
-                        className="w-full mt-2 bg-green-600 hover:bg-green-500 text-4xl"
-                      >
-                        Reveal Answer
-                      </Button>
-                    )}
                     {players.length > 0 && (
                       <div className="mt-4">
                         <h3 className="text-4xl font-semibold mb-2 text-yellow-300 flex items-center justify-center">
-                          <Gift className="mr-2 h-5 w-5" /> Assign Points{" "}
-                          <Gift className="ml-2 h-5 w-5" />
+                          <Gift className="mr-2 h-5 w-5" />
+                          Tildel poeng <Gift className="ml-2 h-5 w-5" />
                         </h3>
                         <div className="grid grid-cols-2 gap-2">
                           {players.map((player) => (
