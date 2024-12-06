@@ -12,6 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import { TeamClickActionApi } from "../api/raspberry/route";
 import Snowfall from "react-snowfall";
 
+import { teamSounds } from "@/lib/utils";
+
 type ConfettiProps = {
   count: number;
 };
@@ -19,6 +21,24 @@ type ConfettiProps = {
 export type TeamClickAction = {
   teamId: number;
   timestamp: number;
+};
+
+const playSoundForTeam = (teamId: number) => {
+  const soundPath = teamSounds[teamId];
+  if (!soundPath) {
+    console.warn(`No sound mapped for teamId: ${teamId}`);
+    return;
+  }
+
+  const audio = new Audio(soundPath);
+  audio.loop = false;
+  audio.play().catch((err) => console.error("Error playing audio:", err));
+};
+
+const handleTeamClicks = (actions: TeamClickAction[]) => {
+  actions.forEach((action) => {
+    playSoundForTeam(action.teamId);
+  });
 };
 
 const fetchButtonActions = async (): Promise<TeamClickAction[]> => {
@@ -276,6 +296,8 @@ const TeamBoxes = ({ players }: TeamBoxesProps) => {
   if (error) {
     console.error("Query Error:", error);
   }
+
+  if (data != undefined) handleTeamClicks(data);
 
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
