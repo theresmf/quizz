@@ -336,7 +336,9 @@ const getBorderColour = (rank: number): string => {
       return "border-8 border-emerald-900";
     case 2: // Third place
       return "border-8 border-yellow-900";
-    default: // Other places
-      return "border-4 border-purple-900";
+    case 3: // Fourth place
+      return "border-8 border-purple-900";
+    default: // Fifth place
+      return "border-8 border-red-900";
   }
 };

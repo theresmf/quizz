@@ -202,19 +202,24 @@ const questionsProduct = [
 export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  /* Question management */
   const [categories, setCategories] = useState<Category[]>([
     { questions: questionsBilde, name: "Hvem er dette?" },
     { questions: questionsQuotes, name: "Gullkorn" },
     { questions: questionsSongs, name: "Julesanger" },
     { questions: questionsProduct, name: "Produktutvikling" },
   ]);
+
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([
     ...questionsBilde,
     ...questionsQuotes,
     ...questionsSongs,
     ...questionsProduct,
   ]);
+
+  /* Player management*/
   const [players, setPlayers] = useState<Player[]>([]);
+
   const addPlayer = (name: string) => {
     if (name.trim()) {
       setPlayers((prevPlayers) => [
