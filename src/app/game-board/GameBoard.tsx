@@ -73,10 +73,13 @@ const SnowflakeConfetti: React.FC<ConfettiProps> = ({ count }) => {
 
 export default function JeopardyBoard() {
   const router = useRouter();
-  const { categories, players, updateScore } = useJeopardyContext();
-  const [revealedQuestions, setRevealedQuestions] = useState<Set<string>>(
-    new Set()
-  );
+  const {
+    categories,
+    players,
+    updateScore,
+    revealedQuestions,
+    setRevealedQuestions,
+  } = useJeopardyContext();
   const [showConfetti, setShowConfetti] = useState(false);
 
   const [, setActiveQuestion] = useState<{

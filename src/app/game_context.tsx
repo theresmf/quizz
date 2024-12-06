@@ -32,6 +32,8 @@ type JeopardyContextType = {
   addPlayer: (name: string) => void;
   removePlayer: (id: number) => void;
   updateScore: (id: number, points: number) => void;
+  revealedQuestions: Set<string>;
+  setRevealedQuestions: React.Dispatch<React.SetStateAction<Set<string>>>;
 };
 
 const JeopardyContext = createContext<JeopardyContextType | undefined>(
@@ -243,6 +245,10 @@ export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const [revealedQuestions, setRevealedQuestions] = useState<Set<string>>(
+    new Set()
+  );
+
   return (
     <JeopardyContext.Provider
       value={{
@@ -255,6 +261,8 @@ export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
         addPlayer,
         removePlayer,
         updateScore,
+        revealedQuestions,
+        setRevealedQuestions,
       }}
     >
       {children}
