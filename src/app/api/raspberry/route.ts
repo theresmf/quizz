@@ -29,8 +29,9 @@ const fetchTeamClicks = async (): Promise<TeamClickActionApi[]> => {
     (doc) => doc.data() as TeamClickActionApi
   );
   const sorted = currentClicks.sort(
-    (a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp)
+    (a, b) => Number(a.timestamp) - Number(b.timestamp)
   );
+  console.log("sorted list: ", sorted);
   return sorted;
 };
 
