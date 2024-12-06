@@ -35,7 +35,7 @@ type Question = {
   question: string;
   answer: string;
   categories: string[];
-  image: string;
+  image: string | null;
 };
 
 export default function AdminBoard() {
