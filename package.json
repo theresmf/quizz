@@ -25,9 +25,7 @@
     "react-dom": "18.2.0",
     "react-snowfall": "^2.2.0",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7",
-    "url-loader": "^4.1.1",
-    "use-sound": "^4.0.3"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
