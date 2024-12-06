@@ -159,9 +159,6 @@ export default function JeopardyBoard() {
                       onClick={() =>
                         handleReveal(categoryIndex, questionIndex, item.value)
                       }
-                      disabled={revealedQuestions.has(
-                        `${categoryIndex}-${questionIndex}`
-                      )}
                     >
                       {revealedQuestions.has(
                         `${categoryIndex}-${questionIndex}`
