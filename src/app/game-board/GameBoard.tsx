@@ -169,10 +169,10 @@ export default function JeopardyBoard() {
         </div>
 
         {/* Jeopardy Board */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 flex-grow">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 flex-grow">
           {categories.map((category, categoryIndex) => (
             <div key={category.name} className="space-y-4">
-              <h2 className="text-4xl font-semibold text-center bg-red-600 text-white p-2 rounded-t-lg shadow border-2 border-yellow-300 flex items-center justify-center">
+              <h2 className="text-4xl font-semibold text-center bg-red-600 text-white p-2 rounded-t-lg shadow border-2 border-yellow-300 flex items-center justify-center h-20 w-80">
                 <Star className="mr-2 h-6 w-6" />
                 {category.name}
                 <Star className="ml-2 h-6 w-6" />
@@ -182,7 +182,7 @@ export default function JeopardyBoard() {
                   <DialogTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full h-20 text-4xl font-bold bg-green-700 hover:bg-green-600 text-white border-2 border-yellow-300"
+                      className="h-20 text-4xl font-bold bg-green-700 hover:bg-green-600 text-white border-2 border-yellow-300 w-80"
                       onClick={() =>
                         handleReveal(categoryIndex, questionIndex, item.value)
                       }
@@ -199,8 +199,8 @@ export default function JeopardyBoard() {
                   </DialogTrigger>
                   <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none w-5/6 h-5/6 p-8">
                     <DialogHeader
-                      className="gap-0 leadning-none inline-flex"
-                      style={{ lineHeight: "1 !important" }}
+                      className="leadning-none inline-flex flex-start"
+                      style={{ justifyContent: "space-between !important" }}
                     >
                       <DialogTitle
                         className="text-yellow-300 inline-flex gap-0 items-center justify-center text-4xl leadning-none"
@@ -211,35 +211,38 @@ export default function JeopardyBoard() {
                       </DialogTitle>
                     </DialogHeader>
                     <div className="py-4 flex justify-center items-center flex-col">
-                      <p className="text-4xl font-semibold mb-4">
+                      <p
+                        className="text-8xl font-semibold mb-4"
+                        style={{ maxWidth: "90%" }}
+                      >
                         {item.question}
                       </p>
-                      {item.image.length > 0 && (
+                      {item.image != null && (
                         <Image
                           alt="Selected"
                           className="object-cover"
-                          width={350}
-                          height={350}
+                          width={450}
+                          height={450}
                           src={item.image}
                         />
                       )}
-                      {revealedAnswers.has(
-                        `${categoryIndex}-${questionIndex}`
-                      ) ? (
-                        <p className="text-yellow-300 font-bold mt-4 text-4xl">
-                          {item.answer}
-                        </p>
-                      ) : (
-                        <Button
-                          onClick={() =>
-                            revealAnswer(categoryIndex, questionIndex)
-                          }
-                          className="w-full mt-2 bg-green-600 hover:bg-green-500 text-4xl"
-                        >
-                          Reveal Answer
-                        </Button>
-                      )}
                     </div>
+                    {revealedAnswers.has(
+                      `${categoryIndex}-${questionIndex}`
+                    ) ? (
+                      <p className="text-yellow-300 font-bold mt-4 text-4xl">
+                        {item.answer}
+                      </p>
+                    ) : (
+                      <Button
+                        onClick={() =>
+                          revealAnswer(categoryIndex, questionIndex)
+                        }
+                        className="w-full mt-2 bg-green-600 hover:bg-green-500 text-4xl"
+                      >
+                        Reveal Answer
+                      </Button>
+                    )}
                     {players.length > 0 && (
                       <div className="mt-4">
                         <h3 className="text-4xl font-semibold mb-2 text-yellow-300 flex items-center justify-center">
