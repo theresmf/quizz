@@ -28,10 +28,10 @@ const fetchTeamClicks = async (): Promise<TeamClickActionApi[]> => {
   const currentClicks = snapshot.docs.map(
     (doc) => doc.data() as TeamClickActionApi
   );
-  currentClicks.sort(
+  const sorted = currentClicks.sort(
     (a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp)
   );
-  return currentClicks;
+  return sorted;
 };
 
 // Add a team click to Firestore
