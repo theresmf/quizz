@@ -171,6 +171,8 @@ export default function JeopardyBoard() {
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="bg-red-800 text-white border-4 border-yellow-300 max-w-none zw-5/6 h-5/6 p-8 overflow-y-scroll">
+                    {/* Team Boxes */}
+                    <TeamBoxes players={players} />
                     <div className="py-4 flex justify-center items-center flex-col">
                       <p
                         className="text-8xl font-semibold mb-4"
@@ -210,11 +212,11 @@ export default function JeopardyBoard() {
                           <Gift className="mr-2 h-5 w-5" />
                           Tildel poeng <Gift className="ml-2 h-5 w-5" />
                         </h3>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-5 gap-2">
                           {players.map((player) => (
                             <div
                               key={player.id}
-                              className="flex items-center justify-between bg-green-700 p-2 rounded"
+                              className="flex items-center justify-between bg-green-700 p-2 rounded text-4xl"
                             >
                               <span>{player.name}</span>
                               <div className="flex gap-1">
@@ -279,7 +281,7 @@ const TeamBoxes = ({ players }: TeamBoxesProps) => {
   }
 
   return (
-    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {players.map((player) => {
         const rank =
           data?.findIndex((action) => action.teamId === player.id) ?? -1;
