@@ -123,42 +123,39 @@ const questionsQuotes = [
   },
 ];
 
-const questionsSongs = [
+const questionsLanguage = [
   {
     id: 22335,
     value: 200,
     image: null,
     question:
-      "Julesangen som på svensk oversettes til: ”Att julen är roligast för alla som är små, om ingen går i fällan och aktar sig för den, ska alla nästa år få fira jul igen.”",
-    categories: ["songs"],
+      "Julesangen som på svensk oversettes til: ”Att julen är roligast för alla som är små om ingen, går i fällan och aktar sig för den ska alla nästa år få fira jul igen.”",
+    categories: ["language"],
     answer: "Musevisa",
   },
   {
     id: 22336,
     value: 400,
     image: null,
-    question:
-      "Julesangen som på tysk oversettes til: “Fröhliche Weihnachten, Fröhliche Weihnachten, Ich wünsche dir fröhliche Weihnachten, Ich wünsche dir fröhliche Weihnachten, Und ein glückliches neues Jahr.”",
-    categories: ["songs"],
-    answer: "Feliz navidad",
+    question: "Han som heter “snjegović” i Kroatia",
+    categories: ["language"],
+    answer: "Snømannen",
   },
   {
     id: 22337,
     value: 600,
     image: null,
-    question:
-      "Julesangen som på nederlandsk oversettes til: “Nu branden duizend kerstlichten, Overal in de stad, Met vreugde en liefde, Kerstdagen zijn zo fijn!”",
-    categories: ["songs"],
-    answer: "Nå tennes tusen julelys",
+    question: "Det er noe jule-relatert som heter “Lebkuchenhaus” på tysk.",
+    categories: ["language"],
+    answer: "Pepperkakehus",
   },
   {
     id: 22338,
     value: 800,
     image: null,
-    question:
-      "Julesangen som på fransk oversettes til: “Vive le vent, vive le vent, Vive le vent d'hiver, Qui rapporte aux vieux enfants Leurs souvenirs d'hier. Vive le vent, vive le vent, Vive le vent d'hiver.”",
-    categories: ["songs"],
-    answer: "Jingle bells",
+    question: "Ett språk hvor julenissen kalles for “Gwiazdor”",
+    categories: ["language"],
+    answer: "Polsk",
   },
 ];
 
@@ -208,14 +205,14 @@ export const JeopardyProvider: React.FC<{ children: React.ReactNode }> = ({
   const [categories, setCategories] = useState<Category[]>([
     { questions: questionsBilde, name: "Hvem er dette?" },
     { questions: questionsQuotes, name: "Gullkorn" },
-    { questions: questionsSongs, name: "Julesanger" },
+    { questions: questionsLanguage, name: "Språk" },
     { questions: questionsProduct, name: "Produktutvikling" },
   ]);
 
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([
     ...questionsBilde,
     ...questionsQuotes,
-    ...questionsSongs,
+    ...questionsLanguage,
     ...questionsProduct,
   ]);
 
